@@ -1,0 +1,6 @@
+com/example/helloworldapi/User.class
+com/example/helloworldapi/exchanges/WishUser.class
+com/example/helloworldapi/RestAPIController.class
+com/example/helloworldapi/UserRepository.class
+com/example/helloworldapi/HelloWorldApiApplication.class
+com/example/helloworldapi/UserService.class

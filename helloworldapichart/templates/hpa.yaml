@@ -1,0 +1,21 @@
+apiVersion: "autoscaling/v2"
+kind: "HorizontalPodAutoscaler"
+metadata:
+  name: "helloworldapi-1-hpa-vdon"
+  namespace: "default"
+  labels:
+    app: "helloworldapi"
+spec:
+  scaleTargetRef:
+    kind: "Deployment"
+    name: "helloworldapi"
+    apiVersion: "apps/v1"
+  minReplicas: 3
+  maxReplicas: 5
+  metrics:
+    - type: "Resource"
+      resource:
+        name: "cpu"
+        target:
+          type: "Utilization"
+          averageUtilization: 80

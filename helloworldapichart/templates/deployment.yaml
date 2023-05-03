@@ -1,0 +1,20 @@
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "helloworldapi"
+  namespace: "default"
+  labels:
+    app: "helloworldapi"
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: "helloworldapi"
+  template:
+    metadata:
+      labels:
+        app: "helloworldapi"
+    spec:
+      containers:
+        - name: "helloworldapi"
+          image: "sushmanthr/helloworldapi:latest"

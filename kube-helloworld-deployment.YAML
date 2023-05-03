@@ -1,0 +1,60 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "helloworldapi"
+  namespace: "default"
+  labels:
+    app: "helloworldapi"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "helloworldapi"
+  template:
+    metadata:
+      labels:
+        app: "helloworldapi"
+    spec:
+      containers:
+        - name: "helloworldapi"
+          image: "sushmanthr/helloworldapi:latest"
+---
+apiVersion: "autoscaling/v2"
+kind: "HorizontalPodAutoscaler"
+metadata:
+  name: "helloworldapi-1-hpa-vdon"
+  namespace: "default"
+  labels:
+    app: "helloworldapi"
+spec:
+  scaleTargetRef:
+    kind: "Deployment"
+    name: "helloworldapi"
+    apiVersion: "apps/v1"
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+    - type: "Resource"
+      resource:
+        name: "cpu"
+        target:
+          type: "Utilization"
+          averageUtilization: 80
+---
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  name: "helloworldapi-service"
+  namespace: "default"
+  labels:
+    app: "helloworldapi"
+spec:
+  ports:
+    - protocol: "TCP"
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: "helloworldapi"
+  type: "LoadBalancer"
+  loadBalancerIP: ""
